@@ -42,20 +42,20 @@ source venv/bin/activate
 
 После активации виртуального окружения установите все необходимые библиотеки из файла requirements.txt.
 
-pip install -r requirements.txt
+* pip install -r requirements.txt
 
 **4. Настройка базы данных и миграции**
 
 Проект использует SQLite по умолчанию, что удобно для локальной разработки. Перед первым запуском необходимо применить миграции.
 
-python manage.py makemigrations
-python manage.py migrate
+* python manage.py makemigrations
+* python manage.py migrate
 
 **5. Создание суперпользователя (по желанию)**
 
 Для доступа к административной панели Django и удобного управления данными вы можете создать суперпользователя:
 
-python manage.py createsuperuser
+* python manage.py createsuperuser
 
 Следуйте инструкциям в консоли для ввода имени пользователя, email и пароля.
 
@@ -63,7 +63,7 @@ python manage.py createsuperuser
 
 Теперь вы можете запустить локальный сервер Django:
 
-python manage.py runserver
+* python manage.py runserver
 
 Проект будет доступен по адресу: http://127.0.0.1:8000/
 
@@ -74,12 +74,12 @@ python manage.py runserver
 
 Рекомендуется регулярно запускать тесты для проверки корректности работы функционала.
 
-python manage.py test # Запускает все тесты во всех приложениях
+* python manage.py test # Запускает все тесты во всех приложениях
 
 Вы также можете запускать тесты для конкретных приложений или даже конкретных классов/методов:
 
-python manage.py test ads                 # Запустить тесты только для приложения 'ads'  
-python manage.py test ads.tests.AdAPITest # Запустить тесты только для класса AdAPITest
+* python manage.py test ads                 # Запустить тесты только для приложения 'ads'  
+* python manage.py test ads.tests.AdAPITest # Запустить тесты только для класса AdAPITest
 
 **Структура проекта**
 
