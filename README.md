@@ -86,8 +86,8 @@ source venv/bin/activate
 └── exchange_Project/             # Корневая папка проекта Django
     ├── .gitignore                
     ├── manage.py                 
-    ├── requirements.txt          # Список зависимостей проекта Python (библиотек, которые нужно установить)
-    ├── schema.yml                # Схема данных или API 
+    ├── requirements.txt         
+    ├── schema.yml                
     ├── accounts/                 # Приложение Django для управления пользователями, аутентификацией и профилями
     │   ├── admin.py              
     │   ├── apps.py               
