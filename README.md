@@ -82,7 +82,7 @@ source venv/bin/activate
 * python manage.py test ads.tests.AdAPITest # Запустить тесты только для класса AdAPITest
 
 **Структура проекта**
-
+```
 └── exchange_Project/             # Корневая папка проекта Django
     ├── .gitignore                
     ├── manage.py                 
@@ -114,7 +114,7 @@ source venv/bin/activate
     │   ├── wsgi.py               
     │   └── __init__.py           
     ├── templates/                # Каталог для HTML-шаблонов проекта
-
+```
 
 **Использование API**
 
