@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ ad.title }} - Детали объявления{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{{ ad.title }}</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <p><strong>Автор:</strong> {{ ad.user.username }}</p>
+            <p><strong>Описание:</strong></p>
+            <p class="card-text">{{ ad.description }}</p>
+            <p><strong>Категория:</strong> <span class="badge bg-info text-dark">{{ ad.get_category_display }}</span></p>
+            <p><strong>Состояние:</strong> <span class="badge bg-secondary">{{ ad.get_condition_display }}</span></p>
+            {% if ad.image_url %}
+                <img src="{{ ad.image_url }}" alt="{{ ad.title }}" class="img-fluid rounded my-3" style="max-height: 300px;">
+            {% endif %}
+            <p class="text-muted">Опубликовано: {{ ad.created_at|date:"d.m.Y H:i" }}</p>
+
+            <div class="mt-3">
+                {% if user.is_authenticated %}
+                    {% if ad.user == user %}
+                        <a href="{% url 'ad_edit' pk=ad.pk %}" class="btn btn-warning me-2">Редактировать</a>
+                        <a href="{% url 'ad_delete' pk=ad.pk %}" class="btn btn-danger">Удалить</a>
+                    {% else %}
+                        <a href="{% url 'exchange_proposal_create' ad_receiver_pk=ad.pk %}" class="btn btn-success">Предложить обмен</a>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted">Для обмена или редактирования войдите в систему.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'ad_list' %}" class="btn btn-outline-secondary mt-3">Вернуться к списку объявлений</a>
+{% endblock %}

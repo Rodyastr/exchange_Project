@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Объявления об обмене{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Объявления об обмене</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">Поиск и фильтрация</div>
+        <div class="card-body">
+            <form method="get" action="{% url 'ad_list' %}" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="id_q" class="form-label">Ключевые слова</label>
+                    <input type="text" class="form-control" id="id_q" name="q" placeholder="Поиск по заголовку/описанию" value="{{ current_query|default_if_none:'' }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="id_category" class="form-label">Категория</label>
+                    <select class="form-select" id="id_category" name="category">
+                        <option value="">Все категории</option>
+                        {% for value, label in categories %}
+                            <option value="{{ value }}" {% if value|stringformat:"s" == current_category|stringformat:"s" %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="id_condition" class="form-label">Состояние</label>
+                    <select class="form-select" id="id_condition" name="condition">
+                        <option value="">Все состояния</option>
+                        {% for value, label in conditions %}
+                            <option value="{{ value }}" {% if value|stringformat:"s" == current_condition|stringformat:"s" %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-primary">Поиск/Фильтр</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="list-group">
+        {% for ad in page_obj %}
+            <div class="list-group-item list-group-item-action mb-3">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><a href="{% url 'ad_detail' pk=ad.pk %}">{{ ad.title }}</a></h5>
+                    <small class="text-muted">{{ ad.created_at|date:"d.m.Y H:i" }}</small>
+                </div>
+                <p class="mb-1">
+                    <strong>Автор:</strong> {{ ad.user.username }}<br>
+                    <strong>Категория:</strong> <span class="badge bg-info text-dark">{{ ad.get_category_display }}</span><br>
+                    <strong>Состояние:</strong> <span class="badge bg-secondary">{{ ad.get_condition_display }}</span>
+                </p>
+                {% if ad.image_url %}
+                    <img src="{{ ad.image_url }}" alt="{{ ad.title }}" class="img-thumbnail mt-2" style="max-width: 150px; height: auto;">
+                {% endif %}
+            </div>
+        {% empty %}
+            <div class="alert alert-info" role="alert">Объявлений пока нет.</div>
+        {% endfor %}
+    </div>
+    
+    {% include 'pagination.html' %}
+    
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои предложения обмена{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Мои предложения обмена</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">Фильтр по статусу</div>
+        <div class="card-body">
+            <form method="get" action="{% url 'exchange_proposal_list' %}" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="id_status" class="form-label">Статус</label>
+                    <select class="form-select" id="id_status" name="status">
+                        <option value="">Все статусы</option>
+                        {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if value == current_status %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-primary">Фильтровать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Отправленные предложения</h2>
+    {% if sent_proposals %}
+        <div class="list-group mb-4">
+            {% for proposal in sent_proposals %}
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">
+                            <a href="{% url 'exchange_proposal_detail' pk=proposal.pk %}">
+                                Предложение по обмену "{{ proposal.ad_sender.title }}" на "{{ proposal.ad_receiver.title }}"
+                            </a>
+                        </h5>
+                        <small class="badge {% if proposal.status == 'pending' %}bg-warning text-dark{% elif proposal.status == 'accepted' %}bg-success{% elif proposal.status == 'rejected' %}bg-danger{% endif %} text-white">{{ proposal.get_status_display }}</small>
+                    </div>
+                    <p class="mb-1 text-muted">Отправлено: {{ proposal.created_at|date:"d.m.Y H:i" }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">У вас нет отправленных предложений.</div>
+    {% endif %}
+
+    <h2 class="mt-4">Полученные предложения</h2>
+    {% if received_proposals %}
+        <div class="list-group">
+            {% for proposal in received_proposals %}
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">
+                            <a href="{% url 'exchange_proposal_detail' pk=proposal.pk %}">
+                                Предложение по обмену "{{ proposal.ad_sender.title }}" на "{{ proposal.ad_receiver.title }}"
+                            </a>
+                        </h5>
+                        <small class="badge {% if proposal.status == 'pending' %}bg-warning text-dark{% elif proposal.status == 'accepted' %}bg-success{% elif proposal.status == 'rejected' %}bg-danger{% endif %} text-white">{{ proposal.get_status_display }}</small>
+                    </div>
+                    <p class="mb-1 text-muted">Получено: {{ proposal.created_at|date:"d.m.Y H:i" }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">У вас нет полученных предложений.</div>
+    {% endif %}
+{% endblock %}

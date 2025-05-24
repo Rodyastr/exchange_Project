@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} 
+
+{% block title %}Создать предложение обмена{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Создать предложение обмена на объявление "{{ ad_receiver.title }}"</h1>
+    <div class="card">
+        <div class="card-body">
+            <form method="post" novalidate> 
+                {% csrf_token %}
+                {{ form|crispy }} 
+                <button type="submit" class="btn btn-primary me-2">Отправить предложение</button>
+                <a href="{% url 'ad_detail' pk=ad_receiver.pk %}" class="btn btn-outline-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

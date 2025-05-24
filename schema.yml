@@ -1,0 +1,657 @@
+openapi: 3.0.3
+info:
+  title: Blog API Project
+  version: 1.0.0
+  description: A sample blog to learn about DRF
+paths:
+  /api/ads/:
+    get:
+      operationId: api_ads_list
+      description: API View для просмотра списка всех объявлений и создания новых.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdList'
+          description: ''
+    post:
+      operationId: api_ads_create
+      description: API View для просмотра списка всех объявлений и создания новых.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ad'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Ad'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Ad'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+          description: ''
+  /api/ads/{id}/:
+    get:
+      operationId: api_ads_retrieve
+      description: API View для его обновления или удаления.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+          description: ''
+    put:
+      operationId: api_ads_update
+      description: API View для его обновления или удаления.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ad'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Ad'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Ad'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+          description: ''
+    patch:
+      operationId: api_ads_partial_update
+      description: API View для его обновления или удаления.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAd'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAd'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAd'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ad'
+          description: ''
+    delete:
+      operationId: api_ads_destroy
+      description: API View для его обновления или удаления.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/proposals/:
+    get:
+      operationId: api_proposals_list
+      description: API View для просмотра списка всех предложений обмена и создания
+        новых.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedExchangeProposalList'
+          description: ''
+    post:
+      operationId: api_proposals_create
+      description: API View для просмотра списка всех предложений обмена и создания
+        новых.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExchangeProposal'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExchangeProposal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExchangeProposal'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeProposal'
+          description: ''
+  /api/proposals/{id}/:
+    get:
+      operationId: api_proposals_retrieve
+      description: API View для просмотра конкретного предложения обмена.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeProposal'
+          description: ''
+  /api/proposals/{id}/status/:
+    patch:
+      operationId: api_proposals_status_partial_update
+      description: API View для обновления статуса предложения обмена.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedExchangeProposalUpdateStatus'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedExchangeProposalUpdateStatus'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedExchangeProposalUpdateStatus'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeProposalUpdateStatus'
+          description: ''
+  /schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+components:
+  schemas:
+    Ad:
+      type: object
+      description: Сериализатор для модели Ad.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        title:
+          type: string
+          title: Название
+          maxLength: 200
+        description:
+          type: string
+          title: Описание
+          maxLength: 255
+        image_url:
+          type: string
+          format: uri
+          nullable: true
+          title: Ссылка на изображение
+          maxLength: 200
+        category:
+          allOf:
+          - $ref: '#/components/schemas/CategoryEnum'
+          title: Категория
+        condition:
+          allOf:
+          - $ref: '#/components/schemas/ConditionEnum'
+          title: Состояние
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Объявление создано
+      required:
+      - category
+      - condition
+      - created_at
+      - description
+      - id
+      - title
+      - user
+    CategoryEnum:
+      enum:
+      - electronics
+      - books
+      - clothes
+      - home
+      - sport
+      - other
+      type: string
+      description: |-
+        * `electronics` - Электроника
+        * `books` - Книги
+        * `clothes` - Одежда
+        * `home` - Товары для дома
+        * `sport` - Спорт
+        * `other` - Другое
+    ConditionEnum:
+      enum:
+      - new
+      - used
+      - good
+      - fair
+      type: string
+      description: |-
+        * `new` - Новый
+        * `used` - Б/у
+        * `good` - В хорошем состоянии
+        * `fair` - Удовлетворительное
+    ExchangeProposal:
+      type: object
+      description: Сериализатор для модели ExchangeProposal.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        ad_sender:
+          type: integer
+        ad_receiver:
+          type: integer
+        comment:
+          type: string
+          nullable: true
+          title: Комментарий
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Статус
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Статус
+      required:
+      - ad_receiver
+      - ad_sender
+      - created_at
+      - id
+      - status
+    ExchangeProposalUpdateStatus:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          title: Статус
+    PaginatedAdList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ad'
+    PaginatedExchangeProposalList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExchangeProposal'
+    PatchedAd:
+      type: object
+      description: Сериализатор для модели Ad.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        title:
+          type: string
+          title: Название
+          maxLength: 200
+        description:
+          type: string
+          title: Описание
+          maxLength: 255
+        image_url:
+          type: string
+          format: uri
+          nullable: true
+          title: Ссылка на изображение
+          maxLength: 200
+        category:
+          allOf:
+          - $ref: '#/components/schemas/CategoryEnum'
+          title: Категория
+        condition:
+          allOf:
+          - $ref: '#/components/schemas/ConditionEnum'
+          title: Состояние
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Объявление создано
+    PatchedExchangeProposalUpdateStatus:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          title: Статус
+    StatusEnum:
+      enum:
+      - pending
+      - accepted
+      - rejected
+      type: string
+      description: |-
+        * `pending` - Ожидает
+        * `accepted` - Принято
+        * `rejected` - Отклонено
+    User:
+      type: object
+      description: |-
+        Сериализатор для модели User.
+        Преобразует объекты модели Ad в JSON-формат и наоборот.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          title: Имя пользователя
+          description: Обязательное поле. Не более 150 символов. Только буквы, цифры
+            и символы @/./+/-/_.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+      required:
+      - id
+      - username
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

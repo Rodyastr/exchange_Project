@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} {# Добавлено #}
+
+{% block title %}Изменить статус предложения{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Изменить статус предложения обмена</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <p>Предложение от "<strong>{{ proposal.ad_sender.title }}</strong>" к "<strong>{{ proposal.ad_receiver.title }}</strong>"</p>
+            <p>Текущий статус: <span class="badge {% if proposal.status == 'pending' %}bg-warning text-dark{% elif proposal.status == 'accepted' %}bg-success{% elif proposal.status == 'rejected' %}bg-danger{% endif %} text-white">{{ proposal.get_status_display }}</span></p>
+
+            <form method="post" novalidate class="mt-3"> 
+                {% csrf_token %}
+                {{ form|crispy }} 
+                <button type="submit" class="btn btn-primary me-2">Обновить статус</button>
+                <a href="{% url 'exchange_proposal_detail' pk=proposal.pk %}" class="btn btn-outline-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
