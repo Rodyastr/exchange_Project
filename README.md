@@ -25,8 +25,8 @@
 
 **1. Клонирование репозитория**
 
-git clone https://github.com/Rodyastr/exchange_Project.git 
-cd exchange_Project # Перейдите в корневую папку проекта
+* git clone https://github.com/Rodyastr/exchange_Project.git 
+* cd exchange_Project # Перейдите в корневую папку проекта
 
 **2. Создание и активация виртуального окружения**
 
