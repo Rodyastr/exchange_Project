@@ -16,7 +16,7 @@
 
 * **Backend:** Python, Django, Django REST Framework  
 * **Database:** SQLite 
-* **Frontend:** HTML, CSS (Bootstrap), JavaScript (для взаимодействия с API, если есть)  
+* **Frontend:** HTML, CSS (Bootstrap)
 * **Тестирование:** unittest (Django's TestCase), rest_framework.test.APITestCase
 
 **Установка и запуск проекта**
